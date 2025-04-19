@@ -55,7 +55,7 @@ class Formatter
         foreach (self::UNITS as $unit => $divisor) {
             if ($remainingSeconds >= $divisor) {
                 $value = intdiv($remainingSeconds, $divisor);
-                $formattedParts[] = $this->formatPart($value, $unit);
+                $formattedParts[] = $this->formatUnit($value, $unit);
                 $remainingSeconds %= $divisor;
             }
         }
@@ -63,7 +63,7 @@ class Formatter
         return $formattedParts;
     }
 
-    private function formatPart(int $value, string $unit): string
+    private function formatUnit(int $value, string $unit): string
     {
         return $value . ' ' . $unit . ($value !== 1 ? 's' : '');
     }
