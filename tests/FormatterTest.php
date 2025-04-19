@@ -65,4 +65,14 @@ class FormatterTest extends TestCase
             '59 seconds' => [59, '59 seconds'],
         ];
     }
+
+    public static function minutesDataProvider(): array
+    {
+        return [
+            '1 minute' => [60, '1 minute'],
+            '2 minutes' => [120, '2 minutes'],
+            '10 minutes' => [600, '10 minutes'],
+            '59 minutes' => [3540, '59 minutes'],
+        ];
+    }
 }

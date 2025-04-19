@@ -12,31 +12,65 @@ class Formatter
      * @throws InvalidArgumentException
      */
     public function format(
-        int $seconds
+        int $inputSeconds
     ): string
     {
-        $this->validateSeconds($seconds);
+        $this->validateSeconds($inputSeconds);
 
-        if ($seconds === 0) {
-            return 'now';
-        }
+        $minutes = intdiv($inputSeconds, 60);
+        $seconds = $inputSeconds % 60;
 
-        if ($seconds === 1) {
-            return '1 second';
-        }
-
-        return "{$seconds} seconds";
+        return $this->present($minutes, $seconds);
     }
 
     /**
      * @throws InvalidArgumentException
      */
     private function validateSeconds(
-        int $seconds
-    ): void
-    {
-        if ($seconds < 0) {
+        int $inputSeconds
+    ): void {
+        if ($inputSeconds < 0) {
             throw new InvalidArgumentException('Seconds must be greater than or equals to 0');
         }
+    }
+
+    public function getSeconds(int $inputSeconds): string
+    {
+        if ($inputSeconds === 0) {
+            return 'now';
+        }
+
+        if ($inputSeconds === 1) {
+            return '1 second';
+        }
+
+        return "{$inputSeconds} seconds";
+    }
+
+    private function present(
+        int $minutes,
+        int $seconds,
+    ): string {
+        if ($minutes === 0 && $seconds === 0) {
+            return 'now';
+        }
+
+        if ($minutes === 0) {
+            if ($seconds === 1) {
+                return '1 second';
+            }
+
+            return "{$seconds} seconds";
+        }
+
+        if ($seconds === 0) {
+            if ($minutes === 1) {
+                return '1 minute';
+            }
+
+            return "{$minutes} minutes";
+        }
+
+        return "{$minutes} minutes and {$seconds} seconds";
     }
 }
