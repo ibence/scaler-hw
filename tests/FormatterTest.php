@@ -39,6 +39,7 @@ class FormatterTest extends TestCase
     }
 
     #[DataProvider('zeroSecondsDataProvider')]
+    #[DataProvider('secondsDataProvider')]
     public function test_formats_duration_correctly(
         int $seconds,
         string $expected
@@ -52,6 +53,16 @@ class FormatterTest extends TestCase
     {
         return [
             'Zero seconds' => [0, 'now'],
+        ];
+    }
+
+    public static function secondsDataProvider(): array
+    {
+        return [
+            '1 second' => [1, '1 second'],
+            '2 seconds' => [2, '2 seconds'],
+            '10 seconds' => [10, '10 seconds'],
+            '59 seconds' => [59, '59 seconds'],
         ];
     }
 }

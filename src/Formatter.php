@@ -17,7 +17,15 @@ class Formatter
     {
         $this->validateSeconds($seconds);
 
-        return 'now';
+        if ($seconds === 0) {
+            return 'now';
+        }
+
+        if ($seconds === 1) {
+            return '1 second';
+        }
+
+        return "{$seconds} seconds";
     }
 
     /**
