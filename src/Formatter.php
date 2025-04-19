@@ -13,14 +13,16 @@ class Formatter
      */
     public function format(
         int $inputSeconds
-    ): string
-    {
+    ): string {
         $this->validateSeconds($inputSeconds);
 
-        $minutes = intdiv($inputSeconds, 60);
-        $seconds = $inputSeconds % 60;
+        $durationParts = new DurationParts(
+            $inputSeconds,
+            $inputSeconds % 60,
+            intdiv($inputSeconds, 60)
+        );
 
-        return $this->present($minutes, $seconds);
+        return $this->present($durationParts);
     }
 
     /**
@@ -35,9 +37,11 @@ class Formatter
     }
 
     private function present(
-        int $minutes,
-        int $seconds,
+        DurationParts $durationParts
     ): string {
+        $seconds = $durationParts->seconds;
+        $minutes = $durationParts->minutes;
+
         if ($minutes === 0 && $seconds === 0) {
             return 'now';
         }
