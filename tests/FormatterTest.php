@@ -100,6 +100,7 @@ class FormatterTest extends TestCase
             '364 days' => [31449600, '364 days'],
         ];
     }
+
     public static function yearsDataProvider(): array
     {
         return [
@@ -140,7 +141,10 @@ class FormatterTest extends TestCase
             '2 days and 5 hours' => [190800, '2 days and 5 hours'],
             '1 day, 1 hour, 1 minute and 1 second' => [90061, '1 day, 1 hour, 1 minute and 1 second'],
             '2 days, 3 hours, 4 minutes and 5 seconds' => [183845, '2 days, 3 hours, 4 minutes and 5 seconds'],
-            '364 days, 23 hours, 59 minutes and 59 seconds' => [31535999, '364 days, 23 hours, 59 minutes and 59 seconds'],
+            '364 days, 23 hours, 59 minutes and 59 seconds' => [
+                31535999,
+                '364 days, 23 hours, 59 minutes and 59 seconds'
+            ],
         ];
     }
 
