@@ -43,9 +43,11 @@ class FormatterTest extends TestCase
     #[DataProvider('minutesDataProvider')]
     #[DataProvider('hoursDataProvider')]
     #[DataProvider('daysDataProvider')]
+    #[DataProvider('yearsDataProvider')]
     #[DataProvider('minutesWithSecondsDataProvider')]
-    #[DataProvider('hoursWithMinutesAndSecondsDataProvider')]
-    #[DataProvider('daysWithHoursDataProvider')]
+    #[DataProvider('hoursWithOtherUnitsDataProvider')]
+    #[DataProvider('daysWithOtherUnitsDataProvider')]
+    #[DataProvider('yearsWithOtherUnitsDataProvider')]
     public function test_formats_duration_correctly(
         int $seconds,
         string $expected
@@ -97,6 +99,14 @@ class FormatterTest extends TestCase
             '364 days' => [31449600, '364 days'],
         ];
     }
+    public static function yearsDataProvider(): array
+    {
+        return [
+            '1 year' => [31536000, '1 year'],
+            '2 years' => [63072000, '2 years'],
+            '10 years' => [315360000, '10 years'],
+        ];
+    }
 
     public static function minutesWithSecondsDataProvider(): array
     {
@@ -110,7 +120,7 @@ class FormatterTest extends TestCase
         ];
     }
 
-    public static function hoursWithMinutesAndSecondsDataProvider(): array
+    public static function hoursWithOtherUnitsDataProvider(): array
     {
         return [
             '1 hour and 1 second' => [3601, '1 hour and 1 second'],
@@ -120,13 +130,25 @@ class FormatterTest extends TestCase
         ];
     }
 
-    public static function daysWithHoursDataProvider(): array
+    public static function daysWithOtherUnitsDataProvider(): array
     {
         return [
             '1 day and 1 hour' => [90000, '1 day and 1 hour'],
             '2 days and 5 hours' => [190800, '2 days and 5 hours'],
             '1 day, 1 hour, 1 minute and 1 second' => [90061, '1 day, 1 hour, 1 minute and 1 second'],
             '2 days, 3 hours, 4 minutes and 5 seconds' => [183845, '2 days, 3 hours, 4 minutes and 5 seconds'],
+        ];
+    }
+
+    public static function yearsWithOtherUnitsDataProvider(): array
+    {
+        return [
+            '1 year and 1 second' => [31536001, '1 year and 1 second'],
+            '1 year, 1 day and 1 second' => [31622401, '1 year, 1 day and 1 second'],
+            '2 years, 3 days, 4 hours, 5 minutes and 6 seconds' => [
+                63345906,
+                '2 years, 3 days, 4 hours, 5 minutes and 6 seconds'
+            ],
         ];
     }
 }

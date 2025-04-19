@@ -9,6 +9,7 @@ use InvalidArgumentException;
 class Formatter
 {
     private const array UNITS = [
+        'year' => 60 * 60 * 24 * 365,
         'day' => 60 * 60 * 24,
         'hour' => 60 * 60,
         'minute' => 60,
