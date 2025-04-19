@@ -148,6 +148,10 @@ class FormatterTest extends TestCase
         return [
             '1 year and 1 second' => [31536001, '1 year and 1 second'],
             '1 year, 1 day and 1 second' => [31622401, '1 year, 1 day and 1 second'],
+            '1 year, 1 day, 1 hour, 1 minute and 1 second' => [
+                31626061,
+                '1 year, 1 day, 1 hour, 1 minute and 1 second'
+            ],
             '2 years, 3 days, 4 hours, 5 minutes and 6 seconds' => [
                 63345906,
                 '2 years, 3 days, 4 hours, 5 minutes and 6 seconds'
