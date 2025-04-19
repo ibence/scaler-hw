@@ -43,6 +43,7 @@ class FormatterTest extends TestCase
     #[DataProvider('minutesDataProvider')]
     #[DataProvider('hoursDataProvider')]
     #[DataProvider('minutesWithSecondsDataProvider')]
+    #[DataProvider('hoursWithMinutesAndSecondsDataProvider')]
     public function test_formats_duration_correctly(
         int $seconds,
         string $expected
@@ -95,6 +96,16 @@ class FormatterTest extends TestCase
             '19 minutes and 2 seconds' => [1142, '19 minutes and 2 seconds'],
             '7 minutes and 48 seconds' => [468, '7 minutes and 48 seconds'],
             '59 minutes and 59 seconds' => [3599, '59 minutes and 59 seconds'],
+        ];
+    }
+
+    public static function hoursWithMinutesAndSecondsDataProvider(): array
+    {
+        return [
+            '1 hour and 1 second' => [3601, '1 hour and 1 second'],
+            '1 hour and 1 minute' => [3660, '1 hour and 1 minute'],
+            '1 hour, 1 minute and 1 second' => [3661, '1 hour, 1 minute and 1 second'],
+            '2 hours, 30 minutes and 45 seconds' => [9045, '2 hours, 30 minutes and 45 seconds'],
         ];
     }
 }

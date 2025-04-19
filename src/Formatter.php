@@ -61,6 +61,12 @@ class Formatter
 
     private function joinParts(array $parts): string
     {
-        return implode(' and ', $parts);
+        if (count($parts) === 1) {
+            return $parts[0];
+        }
+
+        $last = array_pop($parts);
+
+        return implode(', ', $parts) . ' and ' . $last;
     }
 }
