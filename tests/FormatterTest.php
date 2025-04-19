@@ -48,6 +48,7 @@ class FormatterTest extends TestCase
     #[DataProvider('hoursWithOtherUnitsDataProvider')]
     #[DataProvider('daysWithOtherUnitsDataProvider')]
     #[DataProvider('yearsWithOtherUnitsDataProvider')]
+    #[DataProvider('specialValuesDataProvider')]
     public function test_formats_duration_correctly(
         int $seconds,
         string $expected
@@ -156,6 +157,13 @@ class FormatterTest extends TestCase
                 63345906,
                 '2 years, 3 days, 4 hours, 5 minutes and 6 seconds'
             ],
+        ];
+    }
+
+    public static function specialValuesDataProvider(): array
+    {
+        return [
+            'Max integer' => [PHP_INT_MAX, '292471208677 years, 195 days, 15 hours, 30 minutes and 7 seconds'],
         ];
     }
 }
