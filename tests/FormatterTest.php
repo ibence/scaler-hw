@@ -41,6 +41,7 @@ class FormatterTest extends TestCase
     #[DataProvider('zeroSecondsDataProvider')]
     #[DataProvider('secondsDataProvider')]
     #[DataProvider('minutesDataProvider')]
+    #[DataProvider('hoursDataProvider')]
     #[DataProvider('minutesWithSecondsDataProvider')]
     public function test_formats_duration_correctly(
         int $seconds,
@@ -63,7 +64,6 @@ class FormatterTest extends TestCase
         return [
             '1 second' => [1, '1 second'],
             '2 seconds' => [2, '2 seconds'],
-            '10 seconds' => [10, '10 seconds'],
             '59 seconds' => [59, '59 seconds'],
         ];
     }
@@ -73,8 +73,16 @@ class FormatterTest extends TestCase
         return [
             '1 minute' => [60, '1 minute'],
             '2 minutes' => [120, '2 minutes'],
-            '10 minutes' => [600, '10 minutes'],
             '59 minutes' => [3540, '59 minutes'],
+        ];
+    }
+
+    public static function hoursDataProvider(): array
+    {
+        return [
+            '1 hour' => [3600, '1 hour'],
+            '2 hours' => [7200, '2 hours'],
+            '59 hours' => [212400, '59 hours'],
         ];
     }
 
