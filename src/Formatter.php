@@ -22,21 +22,21 @@ class Formatter
     public function format(
         int $inputSeconds
     ): string {
-        $this->validateSeconds($inputSeconds);
+        $this->validateInputSeconds($inputSeconds);
 
         if ($inputSeconds === 0) {
             return 'now';
         }
 
-        $parts = $this->getParts($inputSeconds);
+        $formattedParts = $this->getFormattedParts($inputSeconds);
 
-        return $this->joinParts($parts);
+        return $this->joinParts($formattedParts);
     }
 
     /**
      * @throws InvalidArgumentException
      */
-    private function validateSeconds(
+    private function validateInputSeconds(
         int $inputSeconds
     ): void {
         if ($inputSeconds < 0) {
@@ -46,29 +46,37 @@ class Formatter
         }
     }
 
-    private function getParts(int $inputSeconds): array
-    {
-        $parts = [];
+    private function getFormattedParts(
+        int $inputSeconds
+    ): array {
+        $formattedParts = [];
 
         $remainingSeconds = $inputSeconds;
         foreach (self::UNITS as $unit => $divisor) {
             if ($remainingSeconds >= $divisor) {
                 $value = intdiv($remainingSeconds, $divisor);
-                $parts[] = $value . ' ' . $unit . ($value !== 1 ? 's' : '');
+                $formattedParts[] = $this->formatPart($value, $unit);
                 $remainingSeconds %= $divisor;
             }
         }
-        return $parts;
+
+        return $formattedParts;
     }
 
-    private function joinParts(array $parts): string
+    private function formatPart(int $value, string $unit): string
     {
+        return $value . ' ' . $unit . ($value !== 1 ? 's' : '');
+    }
+
+    private function joinParts(
+        array $parts
+    ): string {
         if (count($parts) === 1) {
             return $parts[0];
         }
 
-        $last = array_pop($parts);
+        $lastPart = array_pop($parts);
 
-        return implode(', ', $parts) . ' and ' . $last;
+        return implode(', ', $parts) . ' and ' . $lastPart;
     }
 }
