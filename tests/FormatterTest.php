@@ -105,6 +105,7 @@ class FormatterTest extends TestCase
             '1 year' => [31536000, '1 year'],
             '2 years' => [63072000, '2 years'],
             '10 years' => [315360000, '10 years'],
+            '5000 years' => [157680000000, '5000 years'],
         ];
     }
 
@@ -127,6 +128,7 @@ class FormatterTest extends TestCase
             '1 hour and 1 minute' => [3660, '1 hour and 1 minute'],
             '1 hour, 1 minute and 1 second' => [3661, '1 hour, 1 minute and 1 second'],
             '2 hours, 30 minutes and 45 seconds' => [9045, '2 hours, 30 minutes and 45 seconds'],
+            '23 hours, 59 minutes and 59 seconds' => [86399, '23 hours, 59 minutes and 59 seconds'],
         ];
     }
 
@@ -137,6 +139,7 @@ class FormatterTest extends TestCase
             '2 days and 5 hours' => [190800, '2 days and 5 hours'],
             '1 day, 1 hour, 1 minute and 1 second' => [90061, '1 day, 1 hour, 1 minute and 1 second'],
             '2 days, 3 hours, 4 minutes and 5 seconds' => [183845, '2 days, 3 hours, 4 minutes and 5 seconds'],
+            '364 days, 23 hours, 59 minutes and 59 seconds' => [31535999, '364 days, 23 hours, 59 minutes and 59 seconds'],
         ];
     }
 
