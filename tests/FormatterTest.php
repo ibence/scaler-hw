@@ -40,6 +40,8 @@ class FormatterTest extends TestCase
 
     #[DataProvider('zeroSecondsDataProvider')]
     #[DataProvider('secondsDataProvider')]
+    #[DataProvider('minutesDataProvider')]
+    #[DataProvider('minutesWithSecondsDataProvider')]
     public function test_formats_duration_correctly(
         int $seconds,
         string $expected
@@ -73,6 +75,18 @@ class FormatterTest extends TestCase
             '2 minutes' => [120, '2 minutes'],
             '10 minutes' => [600, '10 minutes'],
             '59 minutes' => [3540, '59 minutes'],
+        ];
+    }
+
+    public static function minutesWithSecondsDataProvider(): array
+    {
+        return [
+            '1 minute and 1 second' => [61, '1 minute and 1 second'],
+            '2 minutes and 1 second' => [121, '2 minutes and 1 second'],
+            '1 minute and 2 seconds' => [62, '1 minute and 2 seconds'],
+            '19 minutes and 2 seconds' => [1142, '19 minutes and 2 seconds'],
+            '7 minutes and 48 seconds' => [468, '7 minutes and 48 seconds'],
+            '59 minutes and 59 seconds' => [3599, '59 minutes and 59 seconds'],
         ];
     }
 }

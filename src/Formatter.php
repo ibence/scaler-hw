@@ -71,6 +71,18 @@ class Formatter
             return "{$minutes} minutes";
         }
 
+        if ($minutes === 1 && $seconds === 1) {
+            return "{$minutes} minute and {$seconds} second";
+        }
+
+        if ($minutes === 1) {
+            return "{$minutes} minute and {$seconds} seconds";
+        }
+
+        if ($seconds === 1) {
+            return "{$minutes} minutes and {$seconds} second";
+        }
+
         return "{$minutes} minutes and {$seconds} seconds";
     }
 }
