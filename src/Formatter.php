@@ -47,33 +47,18 @@ class Formatter
         }
 
         if ($minutes === 0) {
-            if ($seconds === 1) {
-                return '1 second';
-            }
-
-            return "{$seconds} seconds";
+            return $this->formatUnit($seconds, 'second');
         }
 
         if ($seconds === 0) {
-            if ($minutes === 1) {
-                return '1 minute';
-            }
-
-            return "{$minutes} minutes";
+            return $this->formatUnit($minutes, 'minute');
         }
 
-        if ($minutes === 1 && $seconds === 1) {
-            return "{$minutes} minute and {$seconds} second";
-        }
+        return $this->formatUnit($minutes, 'minute') . ' and ' . $this->formatUnit($seconds, 'second');
+    }
 
-        if ($minutes === 1) {
-            return "{$minutes} minute and {$seconds} seconds";
-        }
-
-        if ($seconds === 1) {
-            return "{$minutes} minutes and {$seconds} second";
-        }
-
-        return "{$minutes} minutes and {$seconds} seconds";
+    private function formatUnit(int $value, string $unit): string
+    {
+        return $value === 1 ? "1 $unit" : "$value {$unit}s";
     }
 }
