@@ -8,6 +8,11 @@ use InvalidArgumentException;
 
 class Formatter
 {
+    private const array UNITS = [
+        'minute' => 60,
+        'second' => 1,
+    ];
+
     /**
      * @throws InvalidArgumentException
      */
@@ -16,13 +21,13 @@ class Formatter
     ): string {
         $this->validateSeconds($inputSeconds);
 
-        $durationParts = new DurationParts(
-            $inputSeconds,
-            $inputSeconds % 60,
-            intdiv($inputSeconds, 60)
-        );
+        if ($inputSeconds === 0) {
+            return 'now';
+        }
 
-        return $this->present($durationParts);
+        $parts = $this->getParts($inputSeconds);
+
+        return $this->joinParts($parts);
     }
 
     /**
@@ -32,33 +37,29 @@ class Formatter
         int $inputSeconds
     ): void {
         if ($inputSeconds < 0) {
-            throw new InvalidArgumentException('Seconds must be greater than or equals to 0');
+            throw new InvalidArgumentException(
+                'Seconds must be greater than or equals to 0'
+            );
         }
     }
 
-    private function present(
-        DurationParts $durationParts
-    ): string {
-        $seconds = $durationParts->seconds;
-        $minutes = $durationParts->minutes;
-
-        if ($minutes === 0 && $seconds === 0) {
-            return 'now';
-        }
-
-        if ($minutes === 0) {
-            return $this->formatUnit($seconds, 'second');
-        }
-
-        if ($seconds === 0) {
-            return $this->formatUnit($minutes, 'minute');
-        }
-
-        return $this->formatUnit($minutes, 'minute') . ' and ' . $this->formatUnit($seconds, 'second');
-    }
-
-    private function formatUnit(int $value, string $unit): string
+    private function getParts(int $inputSeconds): array
     {
-        return $value === 1 ? "1 $unit" : "$value {$unit}s";
+        $parts = [];
+
+        $remainingSeconds = $inputSeconds;
+        foreach (self::UNITS as $unit => $divisor) {
+            if ($remainingSeconds >= $divisor) {
+                $value = intdiv($remainingSeconds, $divisor);
+                $parts[] = $value . ' ' . $unit . ($value !== 1 ? 's' : '');
+                $remainingSeconds %= $divisor;
+            }
+        }
+        return $parts;
+    }
+
+    private function joinParts(array $parts): string
+    {
+        return implode(' and ', $parts);
     }
 }
