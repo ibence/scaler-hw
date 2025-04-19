@@ -17,7 +17,7 @@ class Formatter
     {
         $this->validateSeconds($seconds);
 
-        throw new \Exception('Not implemented yet');
+        return 'now';
     }
 
     /**

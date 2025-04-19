@@ -37,4 +37,21 @@ class FormatterTest extends TestCase
             'Large negative value' => [-PHP_INT_MAX],
         ];
     }
+
+    #[DataProvider('zeroSecondsDataProvider')]
+    public function test_formats_duration_correctly(
+        int $seconds,
+        string $expected
+    ): void {
+        $actual = $this->formatter->format($seconds);
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    public static function zeroSecondsDataProvider(): array
+    {
+        return [
+            'Zero seconds' => [0, 'now'],
+        ];
+    }
 }
