@@ -42,8 +42,10 @@ class FormatterTest extends TestCase
     #[DataProvider('secondsDataProvider')]
     #[DataProvider('minutesDataProvider')]
     #[DataProvider('hoursDataProvider')]
+    #[DataProvider('daysDataProvider')]
     #[DataProvider('minutesWithSecondsDataProvider')]
     #[DataProvider('hoursWithMinutesAndSecondsDataProvider')]
+    #[DataProvider('daysWithHoursDataProvider')]
     public function test_formats_duration_correctly(
         int $seconds,
         string $expected
@@ -83,7 +85,16 @@ class FormatterTest extends TestCase
         return [
             '1 hour' => [3600, '1 hour'],
             '2 hours' => [7200, '2 hours'],
-            '59 hours' => [212400, '59 hours'],
+            '23 hours' => [82800, '23 hours'],
+        ];
+    }
+
+    public static function daysDataProvider(): array
+    {
+        return [
+            '1 day' => [86400, '1 day'],
+            '2 days' => [172800, '2 days'],
+            '364 days' => [31449600, '364 days'],
         ];
     }
 
@@ -106,6 +117,16 @@ class FormatterTest extends TestCase
             '1 hour and 1 minute' => [3660, '1 hour and 1 minute'],
             '1 hour, 1 minute and 1 second' => [3661, '1 hour, 1 minute and 1 second'],
             '2 hours, 30 minutes and 45 seconds' => [9045, '2 hours, 30 minutes and 45 seconds'],
+        ];
+    }
+
+    public static function daysWithHoursDataProvider(): array
+    {
+        return [
+            '1 day and 1 hour' => [90000, '1 day and 1 hour'],
+            '2 days and 5 hours' => [190800, '2 days and 5 hours'],
+            '1 day, 1 hour, 1 minute and 1 second' => [90061, '1 day, 1 hour, 1 minute and 1 second'],
+            '2 days, 3 hours, 4 minutes and 5 seconds' => [183845, '2 days, 3 hours, 4 minutes and 5 seconds'],
         ];
     }
 }
