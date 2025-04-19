@@ -34,19 +34,6 @@ class Formatter
         }
     }
 
-    public function getSeconds(int $inputSeconds): string
-    {
-        if ($inputSeconds === 0) {
-            return 'now';
-        }
-
-        if ($inputSeconds === 1) {
-            return '1 second';
-        }
-
-        return "{$inputSeconds} seconds";
-    }
-
     private function present(
         int $minutes,
         int $seconds,
